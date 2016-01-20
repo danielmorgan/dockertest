@@ -1,21 +1,21 @@
-application:
-    image: cidemo/code
+code:
+    build: code
     volumes:
         - ./cidemo:/var/www/symfony
     tty: true
 php:
-    image: cidemo/php-fpm
+    build: php
     ports:
         - 9000:9000
     volumes_from:
-        - application
-http:
-    image: cidemo/nginx
+        - code
+nginx:
+    build: nginx
     ports:
         - 80:80
     links:
         - php
     volumes_from:
-        - application
+        - code
     volumes:
         - /var/log/nginx:/var/log/nginx
